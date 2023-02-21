@@ -20,10 +20,10 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'vr-desk'`, () => {
+  it(`should have as title 'Vrabia'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('vr-desk');
+    expect(app.title).toEqual('Vrabia');
   });
 
   it('should render title', () => {
