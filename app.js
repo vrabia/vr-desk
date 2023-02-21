@@ -13,7 +13,8 @@ function initWindow() {
     }
   });
 
-  appWindow.loadFile('dist/index.html');
+  // appWindow.loadFile('dist/index.html');
+  appWindow.loadURL('http://localhost:4200');
   appWindow.webContents.openDevTools();
   appWindow.on('closed', function () {
     appWindow = null
@@ -33,3 +34,6 @@ app.on('activate', function () {
   }
 })
 
+try {
+  require('electron-reloader')(module)
+} catch (_) {}
