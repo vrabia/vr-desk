@@ -1,5 +1,5 @@
-import {NgModule} from "@angular/core";
-import {HeaderComponent} from "./header/header.component";
+import { NgModule } from "@angular/core";
+import { HeaderComponent } from "@shared/components/header/header.component";
 
 @NgModule({
   declarations: [HeaderComponent],

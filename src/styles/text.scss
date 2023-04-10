@@ -1,0 +1,100 @@
+@import "src/variables";
+
+$title-size: 1.5rem;
+$huge-size: 3rem;
+$subtitle-size: 1rem;
+$label-size: 1rem;
+$note-size: 0.8rem;
+
+.text {
+  &__huge {
+    font-size: $huge-size;
+    font-weight: bold;
+    &--primary {
+      color: $primary;
+    }
+    &--secondary {
+      color: $secondary;
+    }
+  }
+
+  &__title {
+    font-size: $title-size;
+    font-weight: bold;
+    &--primary {
+      color: $primary;
+    }
+    &--secondary {
+      color: $secondary;
+    }
+  }
+
+  &__subtitle {
+    font-size: $subtitle-size;
+    font-weight: bold;
+    &--primary {
+      color: $primary;
+    }
+    &--secondary {
+      color: $secondary;
+    }
+  }
+
+  &__label {
+    font-size: $label-size;
+    font-weight: bold;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    &--primary {
+      color: $primary;
+    }
+    &--secondary {
+      color: $secondary;
+    }
+  }
+
+  &__note {
+    font-size: $note-size;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+
+    &--primary {
+      color: $primary;
+    }
+
+    &--secondary {
+      color: $secondary;
+    }
+  }
+
+  &__default {
+    font-size: $label-size;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+
+    &--primary {
+      color: $primary;
+    }
+
+    &--secondary {
+      color: $secondary;
+    }
+  }
+}
+
+.link {
+  text-decoration: none;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: $label_size;
+
+  &__primary {
+    color: $primary;
+    text-decoration-line: underline;
+    text-decoration-color: $primary;
+
+    &:hover {
+      color: $gradient_blue;
+    }
+  }
+}

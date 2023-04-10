@@ -1,14 +1,16 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, ipcMain } = require('electron')
 const url = require("url");
 const path = require("path");
-
+const { considerSettingUpAutocompletion } = require("@angular/cli/src/utilities/completion");
 let appWindow;
+const { setHandlers } = require("./src/ipcHandlers/event-handlers");
 
 function initWindow() {
   appWindow = new BrowserWindow({
     width: 1000,
     height: 800,
     webPreferences: {
+      preload: path.join(__dirname, 'preload.js'),
       // nodeIntegration: true
     }
   });
@@ -19,6 +21,8 @@ function initWindow() {
   appWindow.on('closed', function () {
     appWindow = null
   });
+
+  setHandlers(appWindow);
 }
 
 app.on('ready', initWindow);
@@ -36,4 +40,5 @@ app.on('activate', function () {
 
 try {
   require('electron-reloader')(module)
-} catch (_) {}
+} catch (_) {
+}

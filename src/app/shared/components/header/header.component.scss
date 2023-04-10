@@ -1,0 +1,10 @@
+@import "src/styles";
+
+.header {
+  height: $header-size;
+  position: absolute;
+}
+
+.logo-image {
+  cursor: pointer;
+}

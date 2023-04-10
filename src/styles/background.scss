@@ -1,0 +1,14 @@
+@import "variables";
+
+.background {
+  padding: $header-size 0 0 0;
+  height: 100vh;
+
+  &__listener {
+    background: linear-gradient(135deg, $gradient_lime_green 0%, $gradient_green 25%, $gradient_turquoise 60.19%, $gradient_blue 82.49%, $gradient_dark_blue 100%);
+  }
+
+  &__profile {
+    background: $white;
+  }
+}
