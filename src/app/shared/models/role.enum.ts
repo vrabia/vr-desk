@@ -1,0 +1,5 @@
+export enum Roles {
+  SORCERER_SUPREME ='SORCERER_SUPREME',
+  ADMIN = 'ADMIN',
+  USER = 'USER'
+}

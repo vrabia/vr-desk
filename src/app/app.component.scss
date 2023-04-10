@@ -1,13 +1,2 @@
 @import "src/variables";
 
-.background-listener {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  width: 100%;
-  background: linear-gradient(135deg, $gradient_lime_green 0%, $gradient_green 25%, $gradient_turquoise 60.19%, $gradient_blue 82.49%, $gradient_dark_blue 100%);
-};
-
-.background-profile {
-  background: $white;
-};

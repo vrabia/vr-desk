@@ -1,0 +1,58 @@
+@import "src/variables";
+
+$input-border-radius: 15px;
+$input-border-width: 0.1rem;
+$input-padding-x: 0.5rem;
+$input-padding-y: 0.1rem;
+$button-border-radius: 5px;
+$button-padding-x: 1rem;
+$button-padding-y: 0.1rem;
+$button-auth-padding-x: 7rem;
+$button-auth-padding-y: 0.5rem;
+
+.input {
+  &__text {
+    border-radius: $input-border-radius;
+    border-color: $primary;
+    border-width: $input-border-width;
+    padding: $input-padding-y $input-padding-x $input-padding-y $input-padding-x;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+.button {
+  border: none;
+  border-radius: $button-border-radius;
+  padding: $button-padding-y $button-padding-x $button-padding-y $button-padding-x;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__primary {
+    background-color: $primary;
+    font-weight: bold;
+    color: $white;
+
+    &-auth {
+      padding: $button-auth-padding-y $button-auth-padding-x $button-auth-padding-y $button-auth-padding-x;
+      font-size: 1rem;
+    }
+  }
+
+  &__secondary {
+    background-color: $secondary;
+    font-weight: bold;
+    color: $white;
+  }
+}
+
+.select{
+  border-radius: $input-border-radius;
+  border-color: $primary;
+  border-width: $input-border-width;
+  padding: $input-padding-y $input-padding-x $input-padding-y $input-padding-x;
+  cursor: pointer;
+}

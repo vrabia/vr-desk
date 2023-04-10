@@ -1,0 +1,21 @@
+<div class="d-flex flex-row justify-content-center background background__profile">
+  <div *ngIf="!authenticationCodes" class="align-self-center mb-5 pb-5">
+    <div class="text text-center text__title text__title--primary mb-5 pb-4">Hi there</div>
+    <button class="button button__primary button__primary-auth mb-5" (click)="openWebsite()">Login in website</button>
+  </div>
+
+  <div *ngIf="authenticationCodes" class="mt-5 pt-5">
+    <div class="mb-5 pb-5 mt-5">
+      <div class="mb-5">
+        <pre class="text text-center text__huge text__huge--primary">{{userCode}}</pre>
+      </div>
+      <div class="text text-center text__title text__title--secondary mb-5 pb-5">Please enter this code in the website
+      </div>
+    </div>
+    <div class="text text-center text__label text__label--secondary under-balloon-text mt-5 pt-5">If the page didn't
+      open click
+      <a class="link link__primary">here</a></div>
+  </div>
+
+  <img class="balloon-image" alt="welcome-image" src="assets/pictures/auth-screen-balloon.svg">
+</div>
