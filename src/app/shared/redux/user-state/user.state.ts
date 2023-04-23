@@ -27,16 +27,17 @@ export class UserState {
     return state.isLogged;
   }
 
+  @Selector()
+  static username(state: UserStateModel) {
+    return state.user?.username;
+  }
+
+  /**
+   * This action is only used when a definitive update, not-regarding the token, is needed
+   * E.g. when the user logs out or performs a profile edit
+   */
   @Action(UpdateUser)
   updateUser({ getState, patchState }: StateContext<UserStateModel>, action: UpdateUser) {
-    // ToDo -> take info from stored token, request user info from server
-
-    this.storage.subscribeToGet('token', (value: string) => {
-      debugger
-      if (value) {
-      }
-    });
-
     patchState({
       isLogged: action.loggedIn,
       user: action.userInfo,
@@ -44,7 +45,7 @@ export class UserState {
   }
 
   @Action(TokenUpdateUser)
-  startApplicationUpdateUser({ getState, patchState }: StateContext<UserStateModel>, action: TokenUpdateUser) {
+  startApplicationUpdateUser(ctx: StateContext<UserStateModel>, action: TokenUpdateUser) {
     let token = action.token;
 
     if (!token) {
@@ -54,30 +55,34 @@ export class UserState {
         if (!token) {
           return;
         }
-
-        const helper = new JwtHelperService();
-        const decodedToken = helper.decodeToken(token);
-        if (!decodedToken?.sub || helper.isTokenExpired(token)) {
-          // ToDo -> remove token from storage
-          // ToDo -> logout user with session expired
-          patchState({
-            isLogged: false,
-            user: undefined,
-          })
-          return;
-        }
-        const userInfo = {
-          username: decodedToken.sub,
-          roles: decodedToken.roles
-        }
-
-        patchState({
-          isLogged: true,
-          user: userInfo as UserInfo,
-        });
-
-        this.store.dispatch(new Navigate(['/music-listener']));
+        this.updateToken(ctx , token);
       });
+    } else {
+      this.updateToken(ctx , token);
     }
+  }
+
+  private updateToken({ patchState }: StateContext<UserStateModel>, token: string) {
+    const helper = new JwtHelperService();
+    const decodedToken = helper.decodeToken(token);
+    if (!decodedToken?.sub || helper.isTokenExpired(token)) {
+      this.storage.delete('token');
+      patchState({
+        isLogged: false,
+        user: undefined,
+      })
+      return;
+    }
+    const userInfo = {
+      username: decodedToken.sub,
+      roles: decodedToken.roles
+    }
+
+    patchState({
+      isLogged: true,
+      user: userInfo as UserInfo,
+    });
+
+    this.store.dispatch(new Navigate(['/music-listener']));
   }
 }

@@ -1,12 +1,17 @@
 import { Action, Selector, State, StateContext, Store } from "@ngxs/store";
 import { Injectable } from "@angular/core";
 import { DeviceAuthenticationCodes } from "@shared/models/device.model";
-import { RequestAuthenticatedUser, RequestAuthenticationCodes } from "@shared/redux/device-state/device.actions";
+import {
+  RequestAuthenticatedUser,
+  RequestAuthenticationCodes,
+  SignOut
+} from "@shared/redux/device-authentication-state/device-authentication.actions";
 import { AuthenticationService } from "@app/core/authentication.service";
 import { catchError, tap, throwError } from "rxjs";
-import { TokenUpdateUser } from "@shared/redux/user-state/user.actions";
+import { TokenUpdateUser, UpdateUser } from "@shared/redux/user-state/user.actions";
 import { HttpResponse, HttpStatusCode } from "@angular/common/http";
 import { StorageService } from "@app/core/storage.service";
+import { Navigate } from "@ngxs/router-plugin";
 
 export interface DeviceStateModel {
   authenticationCodes?: DeviceAuthenticationCodes;
@@ -15,13 +20,13 @@ export interface DeviceStateModel {
 }
 
 @State<DeviceStateModel>({
-  name: 'DeviceState',
+  name: 'DeviceAuthenticationState',
   defaults: {
     successful: false
   },
 })
 @Injectable()
-export class DeviceState {
+export class DeviceAuthenticationState {
   constructor(private service: AuthenticationService, private store: Store, private storageService: StorageService) {
   }
 
@@ -88,4 +93,17 @@ export class DeviceState {
       )
     );
   }
+
+  @Action(SignOut)
+  signOut({ patchState }: StateContext<DeviceStateModel>) {
+    this.storageService.delete('token');
+    patchState({
+      successful: false,
+      authenticationCodes: undefined,
+      clientId: undefined
+    });
+    this.store.dispatch(new UpdateUser(undefined, false));
+    this.store.dispatch(new Navigate(['/']));
+  }
+
 }

@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { BaseComponent } from "@shared/components/base/base.component";
-import { ElectronService } from "@app/core/electron.service";
+import { ElectronIpcService } from "@app/core/electron-ipc.service";
 import { Select, Store } from "@ngxs/store";
 import { DeviceAuthenticationCodes } from "@shared/models/device.model";
-import { DeviceState } from "@shared/redux/device-state/device.state";
+import { DeviceAuthenticationState } from "@shared/redux/device-authentication-state/device-authentication.state";
 import { Observable } from "rxjs";
-import { RequestAuthenticatedUser, RequestAuthenticationCodes } from "@shared/redux/device-state/device.actions";
+import { RequestAuthenticatedUser, RequestAuthenticationCodes } from "@shared/redux/device-authentication-state/device-authentication.actions";
 import { Router } from "@angular/router";
+import { OpenUrl } from "@shared/redux/app-state/app.actions";
 
 @Component({
   selector: 'app-authentication-screen',
@@ -15,32 +16,31 @@ import { Router } from "@angular/router";
 })
 export class AuthenticationScreenComponent extends BaseComponent implements OnInit {
 
-  @Select(DeviceState.authenticationCodes)
-  $authenticationCodes: Observable<DeviceAuthenticationCodes>;
+  @Select(DeviceAuthenticationState.authenticationCodes)
+  authenticationCodes$: Observable<DeviceAuthenticationCodes>;
   authenticationCodes: DeviceAuthenticationCodes;
   userCode: string;
 
-  @Select(DeviceState.isSuccessful)
-  $successful: Observable<boolean>;
+  @Select(DeviceAuthenticationState.isSuccessful)
+  successful$: Observable<boolean>;
   successful: boolean;
 
   // @ts-ignore
   interval: string | number | NodeJS.Timer | undefined;
 
-  constructor(private es: ElectronService, private store: Store, private router: Router) {
+  constructor(private es: ElectronIpcService, private store: Store, private router: Router) {
     super();
   }
 
   ngOnInit(): void {
-    this.subscribeToDefined(this.$authenticationCodes, (response) => {
+    this.subscribeToDefined(this.authenticationCodes$, (response) => {
       this.authenticationCodes = response;
       this.userCode = this.authenticationCodes.userCode;
       this.userCode = this.userCode.replace(/.{3}/g, '$& ');
-      console.log(this.userCode)
-      this.es.getIpcRenderer().send('open-website', this.authenticationCodes.verificationUri);
+      this.store.dispatch(new OpenUrl(this.authenticationCodes.verificationUri));
     });
 
-    this.subscribeToDefined(this.$successful, (response) => {
+    this.subscribeToDefined(this.successful$, (response) => {
       this.successful = response;
       if (this.successful) {
         this.router.navigate(['/music-listener']);

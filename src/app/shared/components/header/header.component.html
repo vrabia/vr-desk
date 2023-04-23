@@ -1,6 +1,8 @@
-<div class="header">
+<div class="d-flex w-100 justify-content-between header">
   <a href="/">
     <img alt="vrabia-logo" height="100%" class="pt-2 px-2 logo-image" src="assets/logo/logo_vrabia-centered.png">
   </a>
-  <button (click)="trigger($event)">Trigger</button>
+  <div class="align-self-center px-2" *ngIf="isUserLoggedIn$ | async">
+    <app-dropdown-menu></app-dropdown-menu>
+  </div>
 </div>

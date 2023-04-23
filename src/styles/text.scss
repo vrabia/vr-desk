@@ -69,8 +69,6 @@ $note-size: 0.8rem;
 
   &__default {
     font-size: $label-size;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
 
     &--primary {
       color: $primary;
@@ -78,6 +76,10 @@ $note-size: 0.8rem;
 
     &--secondary {
       color: $secondary;
+    }
+
+    &--white {
+      color: $white;
     }
   }
 }
