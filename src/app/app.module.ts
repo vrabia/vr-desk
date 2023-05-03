@@ -15,6 +15,8 @@ import { ProfileHistoryScreenComponent } from "@app/profile-history-screen/profi
 import { AuthenticationScreenComponent } from './authentication-screen/authentication-screen.component';
 import { HttpClientModule } from "@angular/common/http";
 import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
+import { NgxsStoragePluginModule, SESSION_STORAGE_ENGINE } from "@ngxs/storage-plugin";
+import { MusicState } from "@shared/redux/music-state/music.state";
 
 @NgModule({
   declarations: [
@@ -33,6 +35,12 @@ import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
     NgxsLoggerPluginModule.forRoot(),
     NgxsReduxDevtoolsPluginModule.forRoot(),
     NgxsRouterPluginModule.forRoot(),
+    NgxsStoragePluginModule.forRoot({
+      key: [{
+        key: MusicState,
+        engine: SESSION_STORAGE_ENGINE
+      }]
+    }),
     NgbModule
   ],
   providers: [],

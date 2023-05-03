@@ -33,6 +33,7 @@
     "@ngxs/logger-plugin": "^3.8.0",
     "@ngxs/router-plugin": "^3.8.0",
     "@ngxs/store": "^3.8.0",
+    "@ngxs/storage-plugin": "^3.8.0",
     "@popperjs/core": "^2.11.6",
     "bootstrap": "^5.2.3",
     "electron-store": "^8.1.0",

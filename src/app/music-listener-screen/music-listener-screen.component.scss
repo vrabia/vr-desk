@@ -1,0 +1,111 @@
+@import "src/styles/media-queries";
+@import "src/variables";
+
+.not-listening-image {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+
+  @include m-screen {
+    height: 45%;
+    width: auto;
+    padding-right: 12rem;
+  }
+
+  @include l-screen {
+    height: 45%;
+    width: auto;
+    padding-right: 12rem;
+  }
+
+  @include xl-screen {
+    height: 45%;
+    width: auto;
+    padding-right: 12rem;
+  }
+
+  @include s-screen {
+    width: 80%;
+    height: auto;
+    padding-right: 6rem;
+  }
+
+  @include xs-screen {
+    width: 100%;
+    height: auto;
+  }
+}
+
+.listening-image {
+  @include l-screen {
+    width: 30%;
+  }
+
+  @include m-screen {
+    width: 50%;
+  }
+
+  @include xs-screen {
+    width: 100%;
+  }
+
+  @include s-screen {
+    width: 60%;
+  }
+
+  @include xl-screen {
+    width: 25%;
+  }
+}
+
+.music-text {
+  color: $white;
+  font-size: 2rem;
+  @include xl-screen {
+    font-size: 2.5rem;
+  }
+}
+
+.music-playing-image {
+  background-image: url("../../assets/pictures/music-playing.png");
+  background-repeat: repeat-x;
+  background-position: left bottom;
+
+  @include xl-screen {
+    animation: rolling-animation 10s linear infinite;
+    background-size: 110%;
+    height: 11rem;
+    margin-top: 3rem;
+  }
+
+  @include l-screen {
+    animation: rolling-animation 40s linear infinite;
+    background-size: 160%;
+    height: 11rem;
+    margin-top: 3rem;
+  }
+
+  @include m-screen {
+    animation: rolling-animation 60s linear infinite;
+    background-size: 200%;
+    margin-top: 3rem;
+    height: 11rem;
+  }
+
+  @include s-screen {
+    animation: rolling-animation 70s linear infinite;
+    background-size: 250%;
+    margin-top: 1rem;
+    height: 11rem;
+  }
+
+  @include xs-screen {
+    animation: rolling-animation 100s linear infinite;
+    background-size: 400%;
+    height: 12rem;
+  }
+}
+
+@keyframes rolling-animation  {0% {background-position: 1100% bottom;}100% {background-position: 0 bottom;}}

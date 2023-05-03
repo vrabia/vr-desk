@@ -1,1 +1,20 @@
-<div class="background background__listener">music-listener-screen works!</div>
+<div class="background background__listener">
+  <div class="d-flex flex-column py-5" [ngClass]="{'mt-5': !isAppListening}">
+    <div class="text text-center text__section text__section--white">We are {{isAppListening ? "": "not"}} listening to your music</div>
+    <button class="button align-self-center py-2 my-4"
+            [ngClass]="isAppListening ? ' button__primary' : 'button__secondary'"
+            (click)="toggleListening()">{{isAppListening ? "Turn off" : "Turn on"}}</button>
+  </div>
+
+  <div class="d-flex flex-column" *ngIf="isAppListening">
+    <img class="listening-image align-self-center mb-5" alt="whistler" src="assets/pictures/whistle.svg">
+    <div class="text text-center music-text mt-4">{{playingMusic ? playingMusic.artist + " - " + playingMusic.title : "You should start listening to some music" }}</div>
+    <div class="music-playing-image"></div>
+  </div>
+
+  <ng-container *ngIf="!isAppListening">
+    <img class="not-listening-image" alt="not-listening-cute-image" src="assets/pictures/music-not-playing.svg">
+  </ng-container>
+</div>
+
+
