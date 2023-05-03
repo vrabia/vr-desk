@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
   title = 'Vrabia';
 
   @Select(AppState.isGradientScreen)
-  $isGradientScreen: Observable<boolean>;
+  isGradientScreen$: Observable<boolean>;
 
   constructor(private store: Store) {
   }

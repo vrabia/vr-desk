@@ -5,6 +5,7 @@ $huge-size: 3rem;
 $subtitle-size: 1rem;
 $label-size: 1rem;
 $note-size: 0.8rem;
+$section-size: 1.3rem;
 
 .text {
   &__huge {
@@ -16,6 +17,11 @@ $note-size: 0.8rem;
     &--secondary {
       color: $secondary;
     }
+
+    &--white {
+      font-weight: normal;
+      color: $white;
+    }
   }
 
   &__title {
@@ -26,6 +32,9 @@ $note-size: 0.8rem;
     }
     &--secondary {
       color: $secondary;
+    }
+    &--white {
+      color: $white;
     }
   }
 
@@ -69,8 +78,6 @@ $note-size: 0.8rem;
 
   &__default {
     font-size: $label-size;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
 
     &--primary {
       color: $primary;
@@ -78,6 +85,26 @@ $note-size: 0.8rem;
 
     &--secondary {
       color: $secondary;
+    }
+
+    &--white {
+      color: $white;
+    }
+  }
+
+  &__section {
+    font-size: $section-size;
+
+    &--primary {
+      color: $primary;
+    }
+
+    &--secondary {
+      color: $secondary;
+    }
+
+    &--white {
+      color: $white;
     }
   }
 }

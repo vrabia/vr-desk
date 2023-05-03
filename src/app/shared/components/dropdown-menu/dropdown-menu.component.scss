@@ -1,0 +1,41 @@
+@import "src/styles";
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown-arrow {
+  cursor: pointer;
+}
+
+.dropdown-content {
+  right: 0;
+  position: absolute;
+  background-color: $primary;
+  min-width: 12rem;
+  box-shadow: 0 0.7rem 1rem 0 rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  border-radius: 1rem;
+  padding-bottom: 0.4rem;
+  padding-top: 0.4rem;
+}
+
+.dropdown-menu-item {
+  padding: 0.2rem 1rem;
+  text-decoration: none;
+  display: block;
+  text-align: center;
+
+  &__link {
+    cursor: pointer;
+
+    &:hover {
+      background-color: $secondary;
+    }
+  }
+}
+
+hr {
+  margin: 0;
+  border: 0.1rem solid $black;
+}

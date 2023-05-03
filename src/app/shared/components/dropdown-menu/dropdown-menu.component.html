@@ -1,0 +1,13 @@
+<div (clickOutside)="menuVisible = false" class="dropdown">
+  <img class="dropdown-arrow" alt="menu-arrow" src="assets/pictures/down-arrow.svg" (click)="toggleVisibility($event)">
+
+  <div *ngIf="menuVisible" class="dropdown-content">
+    <div class="dropdown-menu-item text text__default text__default--white">Sign in as <br> {{username$ | async}}</div>
+    <hr class="my-2">
+    <div class="dropdown-menu-item dropdown-menu-item__link text text__default text__default--white" (click)="redirectToProfile()">Profile</div>
+    <div class="dropdown-menu-item dropdown-menu-item__link text text__default text__default--white" (click)="redirectToHistory()">History</div>
+    <div class="dropdown-menu-item dropdown-menu-item__link text text__default text__default--white" (click)="openWebsite()">Open website</div>
+    <hr class="my-2">
+    <div class="dropdown-menu-item dropdown-menu-item__link text text__default text__default--white" (click)="signOut()">Sign out</div>
+  </div>
+</div>

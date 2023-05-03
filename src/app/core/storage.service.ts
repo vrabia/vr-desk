@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { ElectronService } from "@app/core/electron.service";
+import { ElectronIpcService } from "@app/core/electron-ipc.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class StorageService {
 
-  constructor(private es: ElectronService) {
+  constructor(private es: ElectronIpcService) {
   }
 
   set(key: string, value: string) {

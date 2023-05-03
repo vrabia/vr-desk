@@ -1,5 +1,8 @@
-import {Action, Selector, State, StateContext} from "@ngxs/store";
-import { UpdateGradientScreen, UpdateListening } from "./app.actions";
+import { Action, Selector, State, StateContext, Store } from "@ngxs/store";
+import { OpenUrl, UpdateGradientScreen, UpdateListening } from "./app.actions";
+import { AuthenticationService } from "@app/core/authentication.service";
+import { Injectable } from "@angular/core";
+import { ElectronIpcService } from "@app/core/electron-ipc.service";
 
 export interface AppStateModel {
   listening: boolean;
@@ -13,8 +16,9 @@ export interface AppStateModel {
     gradientScreen: true,
   },
 })
+@Injectable()
 export class AppState {
-  constructor() {
+  constructor(private es: ElectronIpcService) {
   }
 
   @Selector()
@@ -41,4 +45,8 @@ export class AppState {
     });
   }
 
+  @Action(OpenUrl)
+  openUrl({getState, patchState}: StateContext<AppStateModel>, {url}: OpenUrl) {
+    this.es.getIpcRenderer().send('open-website', url);
+  }
 }

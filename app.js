@@ -1,9 +1,11 @@
 const { app, BrowserWindow, ipcMain } = require('electron')
-const url = require("url");
 const path = require("path");
-const { considerSettingUpAutocompletion } = require("@angular/cli/src/utilities/completion");
+const { setHandlers } = require("./src/handlers/ipc-event-handlers");
+const { connectToMusicListener } = require("./src/handlers/music-listener-connection");
+const { logToFile } = require("./src/handlers/logger");
+
 let appWindow;
-const { setHandlers } = require("./src/ipcHandlers/event-handlers");
+let pyshell;
 
 function initWindow() {
   appWindow = new BrowserWindow({
@@ -23,6 +25,7 @@ function initWindow() {
   });
 
   setHandlers(appWindow);
+  pyshell = connectToMusicListener(appWindow);
 }
 
 app.on('ready', initWindow);
@@ -37,6 +40,11 @@ app.on('activate', function () {
     initWindow()
   }
 })
+
+app.on('quit', function () {
+  logToFile('Quitting app')
+  pyshell.childProcess.kill('SIGINT');
+});
 
 try {
   require('electron-reloader')(module)
