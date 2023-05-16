@@ -4,6 +4,7 @@ const shell = require('electron').shell
 const { exec } = require("child_process");
 
 function connectToMusicListener(mainWindow) {
+  logToFile('connecting to music listener')
   let pyshell = new PythonShell('./pulse-audio-listener.py');
 
   pyshell.stdout.on('data', function (message) {
@@ -18,6 +19,7 @@ function connectToMusicListener(mainWindow) {
 }
 
 function sendToRenderer(mainWindow) {
+  logToFile('sending to renderer')
   exec('./playerctl-scripts/find-playing-player.sh', (error, player, stderr) => {
     if (error) {
       logToFile(`error: ${error.message}`);

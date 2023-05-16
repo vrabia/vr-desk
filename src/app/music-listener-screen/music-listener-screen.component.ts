@@ -2,9 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { BaseComponent } from "@shared/components/base/base.component";
 import { Select, Selector, Store } from "@ngxs/store";
 import { MusicListenerService } from "@app/core/music-listener.service";
-import { MusicState, Song } from "@shared/redux/music-state/music.state";
+import { MusicState } from "@shared/redux/music-state/music.state";
 import { Observable } from "rxjs";
-import { UpdateListening, UpdatePlayer, UpdatePlayingMusic } from "@shared/redux/music-state/music.actions";
+import {
+  SaveListenedSong,
+  UpdateListening,
+  UpdatePlayer,
+  UpdatePlayingMusic
+} from "@shared/redux/music-state/music.actions";
+import { Song } from '@app/shared/models/music.model';
 
 @Component({
   selector: 'app-music-listener-screen',
@@ -32,6 +38,7 @@ export class MusicListenerScreenComponent extends BaseComponent implements OnIni
 
     this.subscribeToDefined(this.playingMusic$, (playingMusic) => {
       this.playingMusic = playingMusic;
+      this.store.dispatch(new SaveListenedSong(playingMusic));
     });
 
     this.musicListenerService.subscribeToNextSong('music-playing', (data) => {

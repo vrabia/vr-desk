@@ -13,10 +13,11 @@ import { MusicListenerScreenComponent } from "@app/music-listener-screen/music-l
 import { ProfileEditScreenComponent } from "@app/profile-edit-screen/profile-edit-screen.component";
 import { ProfileHistoryScreenComponent } from "@app/profile-history-screen/profile-history-screen.component";
 import { AuthenticationScreenComponent } from './authentication-screen/authentication-screen.component';
-import { HttpClientModule } from "@angular/common/http";
+import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
 import { NgxsStoragePluginModule, SESSION_STORAGE_ENGINE } from "@ngxs/storage-plugin";
 import { MusicState } from "@shared/redux/music-state/music.state";
+import { JwtTokenInterceptor } from "@shared/interceptors/jwt-token.interceptor";
 
 @NgModule({
   declarations: [
@@ -43,7 +44,11 @@ import { MusicState } from "@shared/redux/music-state/music.state";
     }),
     NgbModule
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: JwtTokenInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule {

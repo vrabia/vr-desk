@@ -9,6 +9,7 @@ import { Navigate } from "@ngxs/router-plugin";
 export interface UserStateModel {
   isLogged: boolean;
   user?: UserInfo;
+  token?: string;
 }
 
 @State<UserStateModel>({
@@ -30,6 +31,11 @@ export class UserState {
   @Selector()
   static username(state: UserStateModel) {
     return state.user?.username;
+  }
+
+  @Selector()
+  static token(state: UserStateModel) {
+    return state.token;
   }
 
   /**
@@ -79,6 +85,7 @@ export class UserState {
     }
 
     patchState({
+      token,
       isLogged: true,
       user: userInfo as UserInfo,
     });
