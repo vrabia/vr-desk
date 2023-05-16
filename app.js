@@ -25,6 +25,7 @@ function initWindow() {
   });
 
   setHandlers(appWindow);
+  logToFile('init window')
   pyshell = connectToMusicListener(appWindow);
 }
 
