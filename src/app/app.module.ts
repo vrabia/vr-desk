@@ -18,6 +18,8 @@ import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
 import { NgxsStoragePluginModule, SESSION_STORAGE_ENGINE } from "@ngxs/storage-plugin";
 import { MusicState } from "@shared/redux/music-state/music.state";
 import { JwtTokenInterceptor } from "@shared/interceptors/jwt-token.interceptor";
+import { ProfileHistoryCardComponent } from './profile-history-screen/profile-history-card/profile-history-card.component';
+import { ReactiveFormsModule } from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -25,7 +27,8 @@ import { JwtTokenInterceptor } from "@shared/interceptors/jwt-token.interceptor"
     MusicListenerScreenComponent,
     ProfileEditScreenComponent,
     ProfileHistoryScreenComponent,
-    AuthenticationScreenComponent
+    AuthenticationScreenComponent,
+    ProfileHistoryCardComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +45,8 @@ import { JwtTokenInterceptor } from "@shared/interceptors/jwt-token.interceptor"
         engine: SESSION_STORAGE_ENGINE
       }]
     }),
-    NgbModule
+    NgbModule,
+    ReactiveFormsModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

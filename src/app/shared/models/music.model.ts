@@ -1,12 +1,13 @@
 export interface Song {
+  id?: string;
   title: string;
   artist: string;
   genre?: string;
 }
 
-
-export interface ListenedSong extends Song {
-  lastListenDate: String;
+export interface ListenedSong {
+  song: Song;
+  lastListenDate: Date;
   timesListened: number;
 }
 
