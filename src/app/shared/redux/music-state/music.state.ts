@@ -4,7 +4,7 @@ import {
   GetMusicHistory,
   SaveListenedSong,
   UpdateListening,
-  UpdatePlayingMusic
+  UpdatePlayingMusic, UpdateSongGenre
 } from "@shared/redux/music-state/music.actions";
 import { ListenedSong, Song } from "@app/shared/models/music.model";
 import { MusicListenerService } from "@app/core/music-listener.service";
@@ -35,7 +35,7 @@ export interface MusicStateModel {
     musicHistory: {
       totalPages: 0,
       currentIdentifier: '',
-      pageSize: 7,
+      pageSize: 6,
       history: {}
     }
   },
@@ -70,6 +70,16 @@ export class MusicState {
   @Selector()
   static playingMusic(state: MusicStateModel) {
     return state.playingMusic;
+  }
+
+  @Selector()
+  static musicHistoryCurrentPage(state: MusicStateModel) {
+    return state.musicHistory.history[state.musicHistory.currentIdentifier];
+  }
+
+  @Selector()
+  static musicHistoryTotalPages(state: MusicStateModel) {
+    return state.musicHistory.totalPages;
   }
 
   @Action(UpdateListening)
@@ -153,7 +163,7 @@ export class MusicState {
         musicHistory: {
           totalPages: 0,
           currentIdentifier: '',
-          pageSize: 7,
+          pageSize: 6,
           history: {}
         }
       });
@@ -210,5 +220,24 @@ export class MusicState {
 
   private getIdentifier(page: number, pageSize: number) {
     return `${page}-${pageSize}`;
+  }
+
+  @Action(UpdateSongGenre)
+  updateSongGenre({ getState, patchState }: StateContext<MusicStateModel>, { songId, genre }: UpdateSongGenre) {
+    return this.musicListenerService.updateSongGenre(songId, genre).pipe(
+      tap((song) => {
+        const history = {...getState().musicHistory};
+        const historyPages = history.history;
+        for (const identifier in historyPages) {
+          const songs = history.history[identifier];
+          const index = songs.findIndex((song) => song.song.id === songId);
+          if (index > -1) {
+            history.history[identifier][index].song = song;
+          }
+        }
+        return patchState({
+          musicHistory: history
+        });
+      }));
   }
 }

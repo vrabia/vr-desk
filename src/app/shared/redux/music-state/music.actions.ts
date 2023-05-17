@@ -35,3 +35,8 @@ export class SaveListenedSong {
   constructor(public song: Song) {}
 }
 
+export class UpdateSongGenre {
+  static readonly type = '[MusicState] UpdateSongGenre';
+  constructor(public songId: string, public genre: string) {}
+}
+

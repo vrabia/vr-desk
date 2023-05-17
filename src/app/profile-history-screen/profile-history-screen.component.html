@@ -1,1 +1,15 @@
-<p>profile-history-screen works!</p>
+<div class="d-flex flex-row background background__profile">
+  <div class="cards-area">
+    <div class="text text__title text__title--primary mb-2 mt-4">{{username$ | async}} - Recent history</div>
+    <div class="text text__note text__note--secondary mb-3">Edit the genre of the songs by pressing on the green label
+      on the right corner of each song
+    </div>
+    <ng-container *ngFor="let song of historyPageSongs">
+      <app-profile-history-card [listenedSong]="song"></app-profile-history-card>
+    </ng-container>
+    <div class="d-flex pb-4 justify-content-between">
+      <div *ngIf="hasPreviousPage" class="align-self-start link link__primary" (click)="requestPreviousPage()">< Previous page</div>
+      <div *ngIf="hasNextPage" class="align-self-end link link__primary" (click)="requestNextPage()">Next page ></div>
+    </div>
+  </div>
+</div>

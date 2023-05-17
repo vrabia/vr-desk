@@ -1,0 +1,13 @@
+<div class="song-card">
+  <div class="title-artist-area">
+    <div class="text text__default text__default--primary">{{listenedSong.song.title}}</div>
+    <div class="text text__default text__default--secondary">{{listenedSong.song.artist}}</div>
+  </div>
+  <div class="details-area">
+    <form [formGroup]="form" (ngSubmit)="saveGenre()">
+      <input formControlName="genre" class="genre-label text text-center"/>
+    </form>
+
+    <div class="text text__default text__default--primary">{{listenedSong.lastListenDate | date : 'dd.MM.yyyy  hh:mm' }}</div>
+  </div>
+</div>
