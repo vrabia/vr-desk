@@ -29,5 +29,4 @@ function setStoreHandlers(mainWindow) {
   });
 }
 
-
 module.exports = { setHandlers };

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BaseComponent } from "@shared/components/base/base.component";
-import { Select, Selector, Store } from "@ngxs/store";
+import { Select, Store } from "@ngxs/store";
 import { MusicListenerService } from "@app/core/music-listener.service";
 import { MusicState } from "@shared/redux/music-state/music.state";
 import { Observable } from "rxjs";
@@ -48,6 +48,8 @@ export class MusicListenerScreenComponent extends BaseComponent implements OnIni
       this.store.dispatch(new UpdatePlayer(data.player));
       this.store.dispatch(new UpdatePlayingMusic(data.title, data.artist));
     });
+
+    this.musicListenerService.getActualSong();
   }
 
   toggleListening() {

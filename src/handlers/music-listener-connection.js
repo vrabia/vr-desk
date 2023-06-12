@@ -2,10 +2,16 @@ const { PythonShell } = require("python-shell");
 const { logToFile } = require("./logger");
 const shell = require('electron').shell
 const { exec } = require("child_process");
+const { ipcMain } = require("electron");
 
 function connectToMusicListener(mainWindow) {
   logToFile('connecting to music listener')
   let pyshell = new PythonShell('./pulse-audio-listener.py');
+
+  ipcMain.on('music-playing-get', (event, args) => {
+    sendToRenderer(mainWindow);
+  });
+
 
   pyshell.stdout.on('data', function (message) {
     // logToFile(message);

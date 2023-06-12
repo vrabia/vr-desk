@@ -45,9 +45,9 @@ export class MusicState {
 
   private readonly artistsWordList = [' ft', ' feat', ' featuring', ' vs', ' and', ' x', ' with', ' +', '|', ' &', 'X', ',', ' e', ' -',];
   private readonly titleWordList = [' ft', ' feat', ' featuring', ' +', '|', ' &', ',',
-    'Oficial Video', 'Official Video', 'Official Music Video', 'Music Video', 'Video', 'Lyrics', 'Lyric Video', 'Lyric',
+    'Oficial Video', 'Official Video', 'official video', 'Official Music Video', 'Music Video', 'Video', 'Lyrics', 'Lyric Video', 'Lyric',
     'Lyrics Video', 'Lyrics', 'Audio', 'Audio Video', 'Audio Oficial', 'Audio Oficial Video', '4K', 'HD', 'HQ', 'Remix',
-    'Live', '- YouTube', 'Original', 'Version', 'Cover', 'LIVE'];
+    'Live', '- YouTube', 'Original', 'Version', 'Cover', 'LIVE', "Official Remix", "Official Audio", "Official Audio"];
 
   constructor(private musicListenerService: MusicListenerService) {
   }
@@ -92,29 +92,35 @@ export class MusicState {
   @Action(UpdatePlayingMusic)
   updatePlayingMusic({ getState, patchState }: StateContext<MusicStateModel>, { title, artist }: UpdatePlayingMusic) {
     // ToDo - add validation, add separation at - if title contains -, check to be different than the previous one
+    let newArtist = artist;
     if (title.includes('-')) {
       const titleParts = title.split('-');
       title = titleParts[1];
-      artist = titleParts[0];
+      newArtist = titleParts[0];
     }
     if (title.includes('–')) {
       const titleParts = title.split('–');
       title = titleParts[1];
-      artist = titleParts[0];
+      newArtist = titleParts[0];
+    }
+    if (title.includes('•')) {
+      const titleParts = title.split('•');
+      title = titleParts[0];
+      newArtist = titleParts[1];
     }
 
 
     // remove all content from between ()
     title = title.replace(/\([^()]*\)/g, '');
-    artist = artist.replace(/\([^()]*\)/g, '');
+    newArtist = newArtist.replace(/\([^()]*\)/g, '');
     // remove all content from between []
     title = title.replace(/\[[^\][]*]/g, '');
-    artist = artist.replace(/\[[^\][]*]/g, '');
+    newArtist = newArtist.replace(/\[[^\][]*]/g, '');
 
     this.artistsWordList.forEach((word) => {
-      if (artist.includes(word)) {
-        const artistParts = artist.split(word);
-        artist = artistParts[0];
+      if (newArtist.includes(word)) {
+        const artistParts = newArtist.split(word);
+        newArtist = artistParts[0];
       }
     });
 
@@ -126,12 +132,22 @@ export class MusicState {
     });
 
     title = title.trim();
-    artist = artist.trim();
+    newArtist = newArtist.trim();
+
+    if (newArtist == '') {
+      newArtist = artist.trim();
+      this.artistsWordList.forEach((word) => {
+        if (newArtist.includes(word)) {
+          const artistParts = newArtist.split(word);
+          newArtist = artistParts[0].trim();
+        }
+      });
+    }
 
     // check if the music is the same as the previous one
     const state = {...getState()};
     const playingMusic = state.playingMusic;
-    if (playingMusic && playingMusic.title === title && playingMusic.artist === artist) {
+    if (playingMusic && playingMusic.title === title && playingMusic.artist === newArtist) {
       //check if time changed
       if (state.timeChanged) {
         const currentTime = new Date();
@@ -149,7 +165,7 @@ export class MusicState {
     return patchState({
       playingMusic: {
         title,
-        artist
+        artist: newArtist
       },
       timeChanged: new Date()
     });
@@ -241,3 +257,4 @@ export class MusicState {
       }));
   }
 }
+

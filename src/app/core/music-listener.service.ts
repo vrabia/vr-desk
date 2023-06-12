@@ -33,4 +33,8 @@ export class MusicListenerService {
   updateSongGenre(songId: string, genre: string): Observable<Song> {
     return this.http.put<Song>(`${this.baseUrl}/genre`, {id: songId, genre});
   }
+
+  getActualSong() {
+    this.es.getIpcRenderer().send('music-playing-get');
+  }
 }
